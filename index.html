@@ -1,0 +1,492 @@
+<!DOCTYPE html>  <html lang="pt-br">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Alicia Laureano | Caldeirão do Destino</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
+    <style>  
+        :root {  
+            --roxo-profundo: #120021;  
+            --roxo-neon: #a020f0;  
+            --preto-mistico: #05000a;  
+            --ouro-velho: #d4af37;  
+            --texto-suave: #e0d0f0;  
+            --whatsapp-verde: #25d366;  
+        }  * { margin: 0; padding: 0; box-sizing: border-box; text-decoration: none; }  
+
+    body {  
+        background-color: var(--preto-mistico);  
+        color: var(--texto-suave);  
+        font-family: 'Poppins', sans-serif;  
+        overflow-x: hidden;  
+        line-height: 1.4;  
+    }  
+
+    h1, h2, h3, .footer-links a, .sidebar a {  
+        font-family: 'Cinzel', serif;  
+        letter-spacing: 1px;  
+    }  
+
+    /* OVERLAY - PARA FECHAR O MENU CLICANDO FORA */  
+    #menuOverlay {  
+        position: fixed;  
+        top: 0;  
+        left: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0, 0, 0, 0.7);  
+        display: none;  
+        z-index: 998;  
+    }  
+
+    /* MENU LATERAL */  
+    .sidebar {  
+        height: 100%;  
+        width: 0;  
+        position: fixed;  
+        z-index: 1000;  
+        top: 0;  
+        left: 0;  
+        background-color: var(--roxo-profundo);  
+        overflow-x: hidden;  
+        transition: 0.5s;  
+        padding-top: 60px;  
+        box-shadow: 5px 0 15px rgba(0,0,0,0.5);  
+    }  
+
+    .sidebar a {  
+        padding: 15px 32px;  
+        font-size: 18px;  
+        color: var(--texto-suave);  
+        display: block;  
+        transition: 0.3s;  
+        cursor: pointer;  
+    }  
+
+    .sidebar a:hover {  
+        color: var(--roxo-neon);  
+        padding-left: 45px;  
+    }  
+
+    .sidebar .btn-fechar {  
+        position: absolute;  
+        top: 15px;  
+        right: 25px;  
+        font-size: 36px;  
+        cursor: pointer;  
+        color: var(--roxo-neon);  
+    }  
+
+    .open-btn {  
+        font-size: 24px;  
+        cursor: pointer;  
+        position: fixed;  
+        top: 15px;  
+        left: 15px;  
+        z-index: 997;  
+        color: var(--roxo-neon);  
+        background: rgba(18, 0, 33, 0.8);  
+        padding: 8px 12px;  
+        border-radius: 8px;  
+    }  
+
+    /* HEADER */  
+    header {  
+        padding: 80px 20px 40px 20px;  
+        display: flex;  
+        flex-direction: column;  
+        align-items: center;  
+        text-align: center;  
+        background: radial-gradient(circle, #1a0033 0%, #05000a 100%);  
+    }  
+
+    header h1 {  
+        font-size: clamp(2rem, 8vw, 3.5rem);  
+        color: #fff;  
+        text-shadow: 0 0 15px var(--roxo-neon);  
+        margin-bottom: 10px;  
+    }  
+
+    header p {  
+        font-style: italic;  
+        max-width: 500px;  
+        margin-bottom: 25px;  
+        color: var(--ouro-velho);  
+    }  
+
+    .btn-destino {  
+        background: transparent;  
+        color: #fff;  
+        padding: 12px 30px;  
+        border: 2px solid var(--roxo-neon);  
+        border-radius: 50px;  
+        cursor: pointer;  
+        font-family: 'Cinzel', serif;  
+        font-weight: bold;  
+        transition: 0.4s;  
+    }  
+
+    .btn-destino:hover {  
+        background: var(--roxo-neon);  
+        box-shadow: 0 0 20px var(--roxo-neon);  
+    }  
+
+    section { padding: 60px 20px; }  
+    h2 { text-align: center; margin-bottom: 30px; font-size: 28px; color: var(--roxo-neon); }  
+
+    /* ROLETA */  
+    .roleta-container {  
+        width: 220px;  
+        height: 220px;  
+        margin: 20px auto;  
+        border: 6px solid var(--roxo-profundo);  
+        border-radius: 50%;  
+        box-shadow: 0 0 25px var(--roxo-neon);  
+        display: flex;  
+        justify-content: center;  
+        align-items: center;  
+        background: repeating-conic-gradient(from 0deg, var(--roxo-profundo) 0deg 45deg, var(--preto-mistico) 45deg 90deg);  
+    }  
+
+    .girando { animation: girar 3s cubic-bezier(0.15, 0, 0.15, 1) forwards; }  
+    @keyframes girar { from { transform: rotate(0deg); } to { transform: rotate(1800deg); } }  
+
+    /* ELEMENTAIS */  
+    .elementais-grid {  
+        display: grid;  
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));  
+        gap: 20px;  
+        max-width: 1000px;  
+        margin: auto;  
+    }  
+
+    .card-elemental {  
+        background: #0f001d;  
+        border: 1px solid #2c0045;  
+        padding: 30px 15px;  
+        text-align: center;  
+        border-radius: 15px;  
+    }  
+
+    /* RODAPÉ */  
+    footer {  
+        background: #000;  
+        padding: 50px 20px;  
+        text-align: center;  
+    }  
+
+    .social-icons {  
+        margin-bottom: 25px;  
+        display: flex;  
+        justify-content: center;  
+        gap: 25px;  
+    }  
+      
+    .social-icons a {  
+        color: var(--ouro-velho);  
+        font-size: 28px;  
+        transition: 0.3s;  
+    }  
+      
+    .social-icons a:hover {  
+        color: var(--roxo-neon);  
+        transform: translateY(-5px);  
+    }  
+
+    .footer-links {  
+        display: flex;  
+        justify-content: center;  
+        gap: 20px;  
+        flex-wrap: wrap;  
+        margin-bottom: 25px;  
+    }  
+
+    .footer-links a { color: var(--texto-suave); font-size: 14px; cursor: pointer; }  
+    .copy { font-size: 12px; opacity: 0.6; color: var(--ouro-velho); }  
+
+    /* WHATSAPP FLUTUANTE */  
+    .whatsapp-flutuante {  
+        position: fixed;  
+        bottom: 25px;  
+        right: 25px;  
+        width: 60px;  
+        height: 60px;  
+        background-color: var(--whatsapp-verde);  
+        color: #fff;  
+        border-radius: 50%;  
+        display: flex;  
+        justify-content: center;  
+        align-items: center;  
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);  
+        z-index: 1001;  
+        transition: 0.3s;  
+    }  
+    .whatsapp-flutuante:hover { transform: scale(1.1); }  
+    .icon-zap { width: 35px; height: 35px; }  
+
+</style>
+
+</head>  
+<body>  <div id="menuOverlay" onclick="toggleMenu()"></div>  
+
+<div class="open-btn" onclick="toggleMenu()">&#9776;</div>  
+
+<div id="mySidebar" class="sidebar">  
+    <span class="btn-fechar" onclick="toggleMenu()">&times;</span>  
+    <a onclick="irPara('index.html')">Início</a>  
+    <a onclick="irPara('sobre.html')">Sobre</a>  
+    <a onclick="irPara('elementais.html')">Elementais</a>  
+    <a onclick="irPara('rituais.html')">Rituais</a>  
+    <a onclick="irPara('morgana.html')">Morgana</a>  
+    <a onclick="compartilharWhatsApp()">Compartilhar Site</a>  
+</div>  
+
+<header>  
+    <h1>Caldeirão do destino</h1>  
+    <p>"O destino é um caldeirão onde sua alma é o ingrediente principal."</p>  
+    <button class="btn-destino" onclick="document.getElementById('sessao-roleta').scrollIntoView({behavior: 'smooth'})">Consultar Oráculo</button>  
+</header>  
+
+<section id="sessao-roleta" style="text-align: center; background: #080012;">  
+    <h2>Roleta do Destino</h2>  
+    <div class="roleta-container" id="roleta">  
+        <span style="font-size: 50px;">🔮</span>  
+    </div>  
+    <div style="margin-top: 20px;">  
+        <button class="btn-destino" onclick="girarRoleta()">Girar Destino</button>  
+        <div id="mensagem-resultado" style="margin-top: 20px; font-family: 'Cinzel'; color: var(--ouro-velho); min-height: 30px; font-size: 18px;"></div>  
+    </div>  
+</section>  
+
+<section>  
+    <h2>Sabedoria Elemental</h2>  
+    <div class="elementais-grid">  
+        <div class="card-elemental"><span>🔥</span><h3>Fogo</h3><p>Transmutação</p></div>  
+        <div class="card-elemental"><span>🌊</span><h3>Água</h3><p>Cura</p></div>  
+        <div class="card-elemental"><span>🌬</span><h3>Ar</h3><p>Clareza</p></div>  
+        <div class="card-elemental"><span>🌿</span><h3>Terra</h3><p>Base</p></div>  
+    </div>  
+</section>  
+
+<footer>  
+    <div class="social-icons">  
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>  
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>  
+        <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>  
+        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>  
+    </div>  
+    <div class="footer-links">  
+        <a onclick="irPara('index.html')">Início</a>  
+        <a onclick="irPara('sobre.html')">Sobre</a>  
+        <a onclick="irPara('elementais.html')">Elementais</a>  
+        <a onclick="irPara('rituais.html')">Rituais</a>  
+        <a onclick="irPara('morgana.html')">Morgana</a>  
+    </div>  
+    <p class="copy">© 2026 Projeto Alicia Laureano</p>  
+</footer>  
+
+<a href="https://api.whatsapp.com/send?phone=5511976079965&text=Olá%20Alicia,%20vim%20pelo%20site%20e%20gostaria%20de%20uma%20consulta!"   
+   class="whatsapp-flutuante" target="_blank">  
+    <svg class="icon-zap" viewBox="0 0 24 24">  
+        <path fill="currentColor" d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.81 9.81 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.19-.3a8.132 8.132 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m-3.53 3.03c-.13 0-.27.03-.4.06-.23.07-.46.21-.63.42-.35.44-.57 1.02-.57 1.76 0 1.49.85 2.94 2.1 4.01 1.25 1.07 2.8 1.83 3.97 2.15.35.1.72.14 1.08.14.57 0 1.08-.11 1.48-.32.4-.21.75-.54.91-.93.12-.29.11-.56.08-.74l-.1-.23c-.09-.16-.32-.26-.68-.44-.35-.17-2.1-.88-2.43-1-.32-.12-.56-.18-.79.18-.23.36-.89 1.12-1.09 1.35-.2.23-.4.26-.75.09-.35-.18-1.48-.54-2.82-1.74-1.04-.92-1.74-2.06-1.94-2.42-.2-.36-.02-.55.16-.73.16-.16.35-.37.52-.56.11-.11.18-.22.26-.33.08-.12.13-.24.18-.36.06-.23.03-.43-.02-.61-.05-.18-.49-1.18-.67-1.63-.17-.43-.37-.41-.52-.41z"/>  
+    </svg>  
+</a>  
+
+<script>  
+    function toggleMenu() {  
+        const sidebar = document.getElementById("mySidebar");  
+        const overlay = document.getElementById("menuOverlay");  
+        if (sidebar.style.width === "250px") {  
+            sidebar.style.width = "0";  
+            overlay.style.display = "none";  
+        } else {  
+            sidebar.style.width = "250px";  
+            overlay.style.display = "block";  
+        }  
+    }  
+
+    function irPara(url) {  
+        window.location.href = url;  
+    }  
+
+    function compartilharWhatsApp() {  
+        const urlSite = window.location.href;  
+        const fraseAmigavel = encodeURIComponent("🔮 Olá! Acabei de conhecer o Caldeirão do Destino da Alicia Laureano e achei incrível. Dê uma olhada no que os astros reservam para você também: ");  
+        const linkFinal = "https://api.whatsapp.com/send?text=" + fraseAmigavel + urlSite;  
+        window.open(linkFinal, '_blank');  
+    }  
+
+    function girarRoleta() {  
+        const roleta = document.getElementById('roleta');  
+        const resultado = document.getElementById('mensagem-resultado');  
+        const frases = ["O destino está abrindo novos caminhos para você.",
+"Algo que parecia perdido voltará para sua vida.",
+"Uma oportunidade inesperada se aproxima.",
+"Confie mais na sua intuição.",
+"O universo está preparando uma surpresa.",
+"Uma energia de prosperidade está chegando.",
+"Nem tudo que se afasta é perda.",
+"Seu momento de brilho está mais perto do que imagina.",
+"Uma resposta que você espera está a caminho.",
+"Proteção espiritual caminha ao seu lado.",
+"Um novo começo se aproxima.",
+"O que é seu encontrará o caminho até você.",
+"O destino pede coragem neste momento.",
+"Algo que parecia impossível começará a acontecer.",
+"Sua energia está atraindo mudanças positivas.",
+"Escute os sinais ao seu redor.",
+"Um encontro importante acontecerá.",
+"A sorte está girando ao seu favor.",
+"O universo pede paciência.",
+"Uma decisão trará libertação.",
+"Prosperidade caminha em sua direção.",
+"Uma fase de renovação começa agora.",
+"Algo guardado no destino será revelado.",
+"Você está mais protegido do que imagina.",
+"Uma nova energia entrará na sua vida.",
+"A resposta que procura está dentro de você.",
+"O destino pede que você confie no processo.",
+"Um ciclo se encerra para outro começar.",
+"O inesperado pode trazer felicidade.",
+"Uma porta que parecia fechada se abrirá.",
+"Algo bom está sendo preparado para você.",
+"A sorte pode surgir de onde menos espera.",
+"Uma nova possibilidade está próxima.",
+"O destino está testando sua fé.",
+"Sua força interior será sua maior guia.",
+"Algo importante será revelado em breve.",
+"O universo está alinhando seu caminho.",
+"Uma surpresa agradável surgirá.",
+"Confie nos sinais do destino.",
+"Algo que parecia distante se aproximará.",
+"O momento de agir está chegando.",
+"A espiritualidade está olhando por você.",
+"Um caminho inesperado trará crescimento.",
+"A energia da abundância está se aproximando.",
+"Um desejo antigo poderá se manifestar.",
+"Algo novo quer entrar na sua vida.",
+"Um aprendizado importante está chegando.",
+"O destino pede que você siga em frente.",
+"Uma fase mais leve está chegando.",
+"Algo que você deseja também deseja você.",
+"O universo trabalha silenciosamente ao seu favor.",
+"Uma energia de sorte se aproxima.",
+"Um novo capítulo começa agora.",
+"Confie: tudo está se alinhando.",
+"Uma revelação chegará no momento certo.",
+"Algo mágico pode acontecer em breve.",
+"O caldeirão do destino está sorrindo para você.",
+"Frases do Caldeirão do Destino",
+"O caldeirão revela: algo que parecia parado voltará a caminhar.",
+"Uma nova energia se aproxima da sua vida.",
+"O destino prepara uma surpresa para você.",
+"Confie: o invisível está trabalhando ao seu favor.",
+"Uma oportunidade surgirá quando menos esperar.",
+"O universo está abrindo um novo caminho.",
+"Algo que você deseja também deseja você.",
+"Um ciclo antigo está se encerrando.",
+"Uma porta que parecia fechada começará a se abrir.",
+"Sua intuição sabe a resposta.",
+"Um encontro importante está próximo.",
+"Algo guardado pelo destino será revelado.",
+"A sorte pode surgir de onde menos imagina.",
+"O caldeirão sussurra: confie no processo.",
+"Uma fase de crescimento começa agora.",
+"Algo bom está sendo preparado para você.",
+"O destino pede coragem neste momento.",
+"Uma resposta virá em breve.",
+"O universo está alinhando seu caminho.",
+"A energia da prosperidade se aproxima.",
+"O inesperado pode trazer felicidade.",
+"Um novo começo está sendo desenhado.",
+"Algo que parecia impossível pode acontecer.",
+"A espiritualidade caminha ao seu lado.",
+"O destino observa seus passos.",
+"Um desejo antigo pode se manifestar.",
+"Uma mudança positiva está a caminho.",
+"A sorte começa a girar ao seu favor.",
+"Algo que estava oculto será revelado.",
+"Um momento importante se aproxima.",
+"O universo pede paciência.",
+"Uma decisão trará libertação.",
+"Uma nova oportunidade surgirá.",
+"O destino reserva algo especial.",
+"Uma surpresa agradável pode acontecer.",
+"Algo que parecia distante ficará mais perto.",
+"Sua energia está atraindo mudanças.",
+"Um novo caminho começa a se formar.",
+"O caldeirão anuncia: novidades virão.",
+"Uma energia de renovação chega até você.",
+"Algo importante será compreendido em breve.",
+"O destino prepara um encontro marcante.",
+"Uma fase mais leve se aproxima.",
+"A abundância começa a se mover.",
+"Algo inesperado pode transformar seu dia.",
+"Um sinal aparecerá no momento certo.",
+"Uma escolha abrirá novas possibilidades.",
+"Algo que você procura também o procura.",
+"O universo está reorganizando seus caminhos.",
+"Uma oportunidade pede atenção.",
+"O destino pode surpreender você.",
+"Algo bom está mais perto do que imagina.",
+"Um aprendizado importante está chegando.",
+"Uma nova chance surgirá.",
+"A sorte pode tocar sua porta.",
+"Algo antigo será resolvido.",
+"O caldeirão revela: o momento certo se aproxima.",
+"Uma energia positiva envolve você.",
+"Um novo capítulo está começando.",
+"Algo especial está sendo preparado.",
+"Um caminho inesperado trará crescimento.",
+"O destino pede confiança.",
+"Algo bonito está se aproximando da sua vida.",
+"Uma revelação chegará no tempo certo.",
+"O universo observa sua coragem.",
+"Um pequeno sinal trará grande significado.",
+"Algo guardado no destino será liberado.",
+"A prosperidade pode surgir de surpresa.",
+"Um momento de clareza está chegando.",
+"Algo que parecia impossível começa a se mover.",
+"Uma nova fase pede sua atenção.",
+"O destino sorri para quem acredita.",
+"Uma energia de sorte se aproxima.",
+"Algo inesperado poderá alegrar você.",
+"O caldeirão anuncia mudanças positivas.",
+"Uma oportunidade se revelará em breve.",
+"Algo que você perdeu pode retornar.",
+"Um novo caminho surgirá diante de você.",
+"O destino pode trazer respostas.",
+"Uma surpresa está sendo preparada.",
+"Algo que parecia difícil começará a fluir.",
+"Um sinal aparecerá quando você menos esperar.",
+"Uma nova energia entra na sua vida.",
+"O universo prepara um reencontro.",
+"Algo guardado pelo tempo será revelado.",
+"Uma fase de crescimento começa agora.",
+"O destino pede que você siga em frente.",
+"Uma nova possibilidade está próxima.",
+"Algo bom começa a se aproximar.",
+"Um ciclo termina para outro nascer.",
+"O caldeirão revela uma energia de mudança.",
+"Algo inesperado pode abrir um caminho.",
+"Uma oportunidade pede coragem.",
+"O destino está observando sua jornada.",
+"Uma energia de proteção envolve você.",
+"Algo novo quer entrar na sua vida.",
+"Um desejo silencioso pode se realizar.",
+"O universo está preparando um sinal.",
+"Algo mágico pode acontecer em breve.",
+"O caldeirão do destino guarda boas surpresas para você."];  
+        roleta.classList.remove('girando');  
+        void roleta.offsetWidth;   
+        roleta.classList.add('girando');  
+        resultado.innerText = "Mexendo o caldeirão...";  
+        setTimeout(() => {  
+            resultado.innerText = frases[Math.floor(Math.random() * frases.length)];  
+        }, 3000);  
+    }  
+</script>
+
+</body>  
+</html>  
